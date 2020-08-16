@@ -1,8 +1,18 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
+from django.http import JsonResponse, HttpResponse
+from django.core import serializers
 from users.models import Profile
+from django.shortcuts import render
+from matplotlib import pylab
+from pylab import *
+import PIL
+import PIL.Image
+
+from io import BytesIO
+
+import pandas as pd
 
 from .models import Passouts, Placement, Batches, Post
 import csv
@@ -15,6 +25,32 @@ def home(request):
         'posts': Post.objects.all()
     }
     return render(request, 'blog/home.html', context)
+
+
+def showimage(request):
+    # Construct the graph
+    df= pandas.read_csv("placement.csv")
+    df= pd.DataFrame(df)
+    t = arange(0.0, 2.0, 0.01)
+    s = sin(2*pi*t)
+    plot(t, s, linewidth=1.0)
+
+    xlabel('time (s)')
+    ylabel('voltage (mV)')
+    title('About as simple as it gets, folks')
+    grid(True)
+
+    buffer = BytesIO()
+
+    canvas = pylab.get_current_fig_manager().canvas
+    canvas.draw()
+    pilImage = PIL.Image.frombytes(
+        "RGB", canvas.get_width_height(), canvas.tostring_rgb())
+    pilImage.save(buffer, "PNG")
+    pylab.close()
+
+    # Send buffer in a http response the the browser with the mime type image/png set
+    return HttpResponse(buffer.getvalue(), content_type="image/png")
 
 
 class PostListView(ListView):
@@ -38,17 +74,31 @@ class PostListView(ListView):
         context["is_hod"] = profile.is_hod
         context["is_enc"] = profile.is_enc
         context["is_imapact"] = profile.is_imapact
+
+        data = Batches.objects.all()
+        res = serializers.serialize('json', data)
+        context["dataset"] = res
+        # t = arange(0.0, 2.0, 0.01)
+        # s = sin(2*pi*t)
+        # plot(t, s, linewidth=1.0)
+
+        # xlabel('time (s)')
+        # ylabel('voltage (mV)')
+        # title('About as simple as it gets, folks')
+        # grid(True)
+
+        # # Store image in a string buffer
+        # buffer = StringIO.StringIO()
+        # canvas = pylab.get_current_fig_manager().canvas
+        # canvas.draw()
+        # pilImage = PIL.Image.frombytes(
+        #     "RGB", canvas.get_width_height(), canvas.tostring_rgb())
+        # pilImage.save(buffer, "PNG")
+        # pylab.close()
+        # data = HttpResponse(buffer.getvalue(), content_type="image/png")
+        # context["graphData"] = data
+        print(res)
         return context
-
-    # dataReader = csv.reader(open(
-    #     r'C:\\Users\\prakh\\Desktop\\J.P.Morgan\\CodeForGood\\team-58\\Sameeksha\\django_project\\blog\\students.csv'), delimiter=',', quotechar='"')
-
-    # for row in dataReader:
-    #     student = Students()
-    #     student.Name = row[0]
-    #     student.BatchId = row[1]
-    #     student.date = row[2]
-    #     student.save()
 
     dataReader = csv.reader(open(
         r'C:\\Users\\prakh\\Desktop\\J.P.Morgan\\CodeForGood\\team-58\\Sameeksha\\django_project\\blog\\passout.csv'), delimiter=',', quotechar='"')
@@ -100,6 +150,8 @@ class PostListView(ListView):
         batches.Status = row[8]
         batches.Start_Date = row[9]
         batches.save()
+
+    # response = HttpResponse(data, content_type="text/json-comment-filtered")
 
     model = Post
     template_name = 'blog/home.html'
