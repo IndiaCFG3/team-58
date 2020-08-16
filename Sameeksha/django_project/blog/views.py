@@ -4,6 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from users.models import Profile
+from .models import Students
+import csv
 
 # Create your views here.
 
@@ -24,20 +26,6 @@ class PostListView(ListView):
     is_enc = False
     is_imapact = False
 
-    # def get_queryset(self):
-    #     print(self.request.user.id)
-    #     profile = Profile.objects.get(user=self.request.user)
-    #     print(profile.is_accounts)
-    #     is_hr = profile.is_hr
-    #     is_operations = profile.is_operations
-    #     is_accounts = profile.is_accounts
-    #     is_audit = profile.is_audit
-    #     is_hod = profile.is_hod
-    #     is_enc = profile.is_enc
-    #     is_imapact = profile.is_imapact
-    #     print(profile.is_hr)
-    #     return super().get_queryset()
-
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
         print(self.request.user.id)
@@ -51,6 +39,17 @@ class PostListView(ListView):
         context["is_enc"] = profile.is_enc
         context["is_imapact"] = profile.is_imapact
         return context
+
+    dataReader = csv.reader(open(
+        r'C:\\Users\\prakh\Desktop\\J.P.Morgan\\CodeForGood\\team-58\\Sameeksha\\django_project\\blog\\students.csv'), delimiter=',', quotechar='"')
+
+    for row in dataReader:
+        student = Students()
+        print(row[0], row[1])
+        student.Name = row[0]
+        student.BatchId = row[1]
+        student.date = row[2]
+        student.save()
 
     model = Post
     template_name = 'blog/home.html'
