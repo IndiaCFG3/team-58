@@ -3,6 +3,8 @@ from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from users.models import Profile
+
 # Create your views here.
 
 
@@ -14,6 +16,42 @@ def home(request):
 
 
 class PostListView(ListView):
+    is_hr = False
+    is_operations = False
+    is_accounts = False
+    is_audit = False
+    is_hod = False
+    is_enc = False
+    is_imapact = False
+
+    # def get_queryset(self):
+    #     print(self.request.user.id)
+    #     profile = Profile.objects.get(user=self.request.user)
+    #     print(profile.is_accounts)
+    #     is_hr = profile.is_hr
+    #     is_operations = profile.is_operations
+    #     is_accounts = profile.is_accounts
+    #     is_audit = profile.is_audit
+    #     is_hod = profile.is_hod
+    #     is_enc = profile.is_enc
+    #     is_imapact = profile.is_imapact
+    #     print(profile.is_hr)
+    #     return super().get_queryset()
+
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        print(self.request.user.id)
+        profile = Profile.objects.get(user=self.request.user)
+        print(profile.is_accounts)
+        context["is_hr"] = profile.is_hr
+        context["is_operations"] = profile.is_operations
+        context["is_accounts"] = profile.is_accounts
+        context["is_audit"] = profile.is_audit
+        context["is_hod"] = profile.is_hod
+        context["is_enc"] = profile.is_enc
+        context["is_imapact"] = profile.is_imapact
+        return context
+
     model = Post
     template_name = 'blog/home.html'
     context_object_name = 'posts'
