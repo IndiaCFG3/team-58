@@ -14,6 +14,7 @@ from io import BytesIO
 from .models import Passouts, Placement, Batches, Post
 import csv
 
+from .Mail import send
 # Create your views here.
 
 
@@ -23,6 +24,9 @@ def home(request):
     }
     return render(request, 'blog/home.html', context)
 
+def sendmail(request):
+    send()
+    return render(request, 'sendmail.html', {})
 
 def showimage(request):
     # Construct the graph
