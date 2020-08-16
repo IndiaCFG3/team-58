@@ -1,5 +1,5 @@
 ,,,,,,,,,
 ,,,,,,,,,
-Region,Center Name,LDCM Name,Reportee,Batch Type,Batch Code,Course Name,Course Name2,Status,Start Date
+Region,Center_Name,LDCM_Name,Reportee,Batch_Type,Batch_Code,Course_Name,Course_Name2,Status,Start_Date
 1,Punjab,Kartik ,Nikhil Sehdev,CSE,A1,OS,CN,A,30102018
 2,Delhi,Ramesh,Nikhil Sehdev,CSE,A2,OS,CN,P,15102018
