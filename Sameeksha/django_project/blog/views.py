@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from users.models import Profile
-from .models import Students
+
+from .models import Passouts, Placement, Batches, Post
 import csv
 
 # Create your views here.
@@ -40,19 +40,19 @@ class PostListView(ListView):
         context["is_imapact"] = profile.is_imapact
         return context
 
+    # dataReader = csv.reader(open(
+    #     r'C:\\Users\\prakh\\Desktop\\J.P.Morgan\\CodeForGood\\team-58\\Sameeksha\\django_project\\blog\\students.csv'), delimiter=',', quotechar='"')
+
+    # for row in dataReader:
+    #     student = Students()
+    #     student.Name = row[0]
+    #     student.BatchId = row[1]
+    #     student.date = row[2]
+    #     student.save()
+
     dataReader = csv.reader(open(
-        r'D:\\CFG\\team-58\\Sameeksha\\django_project\\blog\\students.csv'), delimiter=',', quotechar='"')
-
-    for row in dataReader:
-        student = Students()
-        student.Name = row[0]
-        student.BatchId = row[1]
-        student.date = row[2]
-        student.save()
-
-    dataReader = csv.reader(open(
-        r'D:\\CFG\\team-58\\Sameeksha\\django_project\\blog\\passout.csv'), delimiter=',', quotechar='"')
-
+        r'C:\\Users\\prakh\\Desktop\\J.P.Morgan\\CodeForGood\\team-58\\Sameeksha\\django_project\\blog\\passout.csv'), delimiter=',', quotechar='"')
+    next(dataReader)
     for row in dataReader:
         passout = Passouts()
         passout.Region = row[0]
@@ -61,31 +61,32 @@ class PostListView(ListView):
         passout.Batch_Code = row[3]
         passout.Status = row[4]
         passout.Start_Date = row[5]
-        passout.End_Date = row[5]
-        passout.Course_Name = row[6]
-        passout.Full_Name = row[7]
-        passout.DOB = row[8]
+        passout.End_Date = row[6]
+        passout.Course_Name = row[7]
+        passout.Full_Name = row[8]
+        passout.DOB = row[9]
         passout.save()
 
     dataReader = csv.reader(open(
-        r'D:\\CFG\\team-58\\Sameeksha\\django_project\\blog\\placement.csv'), delimiter=',', quotechar='"')
-
+        r'C:\\Users\\prakh\\Desktop\\J.P.Morgan\\CodeForGood\\team-58\\Sameeksha\\django_project\\blog\\placement.csv'), delimiter=',', quotechar='"')
+    next(dataReader)
     for row in dataReader:
         placement = Placement()
         placement.Region = row[0]
         placement.ReporteeLDCM = row[1]
-        placement.LDC_Name = row[2]
-        placement.Batch_Code = row[3]
-        placement.Course_Name = row[4]
-        placement.Start_Date = row[5]
-        placement.End_Date = row[6]
-        placement.Student_Id = row[7]
-        placement.Student_Name = row[8]
+        placement.LDCM = row[2]
+        placement.LDC_Name = row[3]
+        placement.Batch_Code = row[4]
+        placement.Course_Name = row[5]
+        placement.Start_Date = row[6]
+        placement.End_Date = row[7]
+        placement.Student_Id = row[8]
+        placement.Student_Name = row[9]
         placement.save()
 
     dataReader = csv.reader(open(
-        r'D:\\CFG\\team-58\\Sameeksha\\django_project\\blog\\batches.csv'), delimiter=',', quotechar='"')
-
+        r'C:\\Users\\prakh\\Desktop\\J.P.Morgan\\CodeForGood\\team-58\\Sameeksha\\django_project\\blog\\batches.csv'), delimiter=',', quotechar='"')
+    next(dataReader)
     for row in dataReader:
         batches = Batches()
         batches.Region = row[0]

@@ -19,19 +19,19 @@ class Post(models.Model):
         return reverse('post-detail', kwargs={'pk': self.pk})
 
 
-class Students(models.Model):
-    Name = models.CharField(max_length=100)
-    BatchId = models.TextField()
-    date = models.IntegerField(blank=True, null=True)
+# class Students(models.Model):
+#     Name = models.CharField(max_length=100)
+#     BatchId = models.TextField()
+#     date = models.IntegerField(blank=True, null=True)
 
-    def __str__(self):
-        return self.Name
+#     def __str__(self):
+#         return self.Name
 
 class Passouts(models.Model):
     Region = models.IntegerField()
     LCDM_Name = models.CharField(max_length=100)
     LDC_Name = models.CharField(max_length=100)
-    Batch_Code = models.IntegerField()
+    Batch_Code = models.CharField(max_length=100)
     Status = models.CharField(max_length=1)
     Start_Date = models.IntegerField()
     End_Date = models.IntegerField()
@@ -40,11 +40,13 @@ class Passouts(models.Model):
     DOB = models.IntegerField()
 
     def __str__(self):
-        return self.Name
+        return self.Full_Name
+
 
 class Batches(models.Model):
     Region = models.IntegerField()
     Center_Name = models.CharField(max_length=100)
+    LDCM = models.CharField(max_length=100, default="")
     LDCM_Name = models.CharField(max_length=100)
     Reportee = models.CharField(max_length=100)
     Batch_Type = models.CharField(max_length=100)
@@ -55,7 +57,8 @@ class Batches(models.Model):
     Start_Date = models.IntegerField()
 
     def __str__(self):
-        return self.Name
+        return self.LDCM_Name
+
 
 class Placement(models.Model):
     Region = models.IntegerField()
@@ -69,4 +72,4 @@ class Placement(models.Model):
     Student_Name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.Name
+        return self.Student_Name
