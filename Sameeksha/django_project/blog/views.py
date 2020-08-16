@@ -11,9 +11,6 @@ import PIL
 import PIL.Image
 
 from io import BytesIO
-
-import pandas as pd
-
 from .models import Passouts, Placement, Batches, Post
 import csv
 
@@ -29,15 +26,15 @@ def home(request):
 
 def showimage(request):
     # Construct the graph
-    df= pandas.read_csv("placement.csv")
-    df= pd.DataFrame(df)
+    # df = pandas.read_csv("placement.csv")
+    # print(df["Region", "End_Date"])
     t = arange(0.0, 2.0, 0.01)
     s = sin(2*pi*t)
     plot(t, s, linewidth=1.0)
 
-    xlabel('time (s)')
-    ylabel('voltage (mV)')
-    title('About as simple as it gets, folks')
+    xlabel('Region ')
+    ylabel('End Date')
+    title('Region Wise Analysis')
     grid(True)
 
     buffer = BytesIO()
