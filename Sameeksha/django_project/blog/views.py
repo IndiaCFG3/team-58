@@ -54,18 +54,51 @@ class PostListView(ListView):
         r'D:\\CFG\\team-58\\Sameeksha\\django_project\\blog\\passout.csv'), delimiter=',', quotechar='"')
 
     for row in dataReader:
-        passout=Passouts()
+        passout = Passouts()
         passout.Region = row[0]
-        passout.LCDM_Name = models.CharField(max_length=100)
-        passout.LDC_Name = models.CharField(max_length=100)
-        passout.Batch_Code = models.IntegerField()
-        passout.Status = models.CharField(max_length=1)
-        passout.Start_Date = models.IntegerField()
-        passout.End_Date = models.IntegerField()
-        passout.Course_Name = models.CharField(max_length=100)
-        passout.Full_Name = models.CharField(max_length=100)
-        passout.DOB = models.IntegerField()
+        passout.LCDM_Name = row[1]
+        passout.LDC_Name = row[2]
+        passout.Batch_Code = row[3]
+        passout.Status = row[4]
+        passout.Start_Date = row[5]
+        passout.End_Date = row[5]
+        passout.Course_Name = row[6]
+        passout.Full_Name = row[7]
+        passout.DOB = row[8]
+        passout.save()
 
+    dataReader = csv.reader(open(
+        r'D:\\CFG\\team-58\\Sameeksha\\django_project\\blog\\placement.csv'), delimiter=',', quotechar='"')
+
+    for row in dataReader:
+        placement = Placement()
+        placement.Region = row[0]
+        placement.ReporteeLDCM = row[1]
+        placement.LDC_Name = row[2]
+        placement.Batch_Code = row[3]
+        placement.Course_Name = row[4]
+        placement.Start_Date = row[5]
+        placement.End_Date = row[6]
+        placement.Student_Id = row[7]
+        placement.Student_Name = row[8]
+        placement.save()
+
+    dataReader = csv.reader(open(
+        r'D:\\CFG\\team-58\\Sameeksha\\django_project\\blog\\batches.csv'), delimiter=',', quotechar='"')
+
+    for row in dataReader:
+        batches = Batches()
+        batches.Region = row[0]
+        batches.Center_Name = row[1]
+        batches.LDCM_Name = row[2]
+        batches.Reportee = row[3]
+        batches.Batch_Type = row[4]
+        batches.Batch_Code = row[5]
+        batches.Course_Name = row[6]
+        batches.Course_Name2 = row[7]
+        batches.Status = row[8]
+        batches.Start_Date = row[9]
+        batches.save()
 
     model = Post
     template_name = 'blog/home.html'
