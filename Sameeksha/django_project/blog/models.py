@@ -26,3 +26,47 @@ class Students(models.Model):
 
     def __str__(self):
         return self.Name
+
+class Passouts(models.Model):
+    Region = models.IntegerField()
+    LCDM_Name = models.CharField(max_length=100)
+    LDC_Name = models.CharField(max_length=100)
+    Batch_Code = models.IntegerField()
+    Status = models.CharField(max_length=1)
+    Start_Date = models.IntegerField()
+    End_Date = models.IntegerField()
+    Course_Name = models.CharField(max_length=100)
+    Full_Name = models.CharField(max_length=100)
+    DOB = models.IntegerField()
+
+    def __str__(self):
+        return self.Name
+
+class Batches(models.Model):
+    Region = models.IntegerField()
+    Center_Name = models.CharField(max_length=100)
+    LDCM_Name = models.CharField(max_length=100)
+    Reportee = models.CharField(max_length=100)
+    Batch_Type = models.CharField(max_length=100)
+    Batch_Code = models.CharField(max_length=100)
+    Course_Name = models.CharField(max_length=100)
+    Course_Name2 = models.CharField(max_length=100)
+    Status = models.CharField(max_length=1)
+    Start_Date = models.IntegerField()
+
+    def __str__(self):
+        return self.Name
+
+class Placement(models.Model):
+    Region = models.IntegerField()
+    ReporteeLDCM = models.CharField(max_length=100)
+    LDC_Name = models.CharField(max_length=100)
+    Batch_Code = models.CharField(max_length=100)
+    Course_Name = models.CharField(max_length=100)
+    Start_Date = models.IntegerField()
+    End_Date = models.IntegerField()
+    Student_Id = models.IntegerField()
+    Student_Name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.Name
