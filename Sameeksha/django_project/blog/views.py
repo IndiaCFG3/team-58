@@ -41,15 +41,31 @@ class PostListView(ListView):
         return context
 
     dataReader = csv.reader(open(
-        r'C:\\Users\\prakh\Desktop\\J.P.Morgan\\CodeForGood\\team-58\\Sameeksha\\django_project\\blog\\students.csv'), delimiter=',', quotechar='"')
+        r'D:\\CFG\\team-58\\Sameeksha\\django_project\\blog\\students.csv'), delimiter=',', quotechar='"')
 
     for row in dataReader:
         student = Students()
-        print(row[0], row[1])
         student.Name = row[0]
         student.BatchId = row[1]
         student.date = row[2]
         student.save()
+
+    dataReader = csv.reader(open(
+        r'D:\\CFG\\team-58\\Sameeksha\\django_project\\blog\\passout.csv'), delimiter=',', quotechar='"')
+
+    for row in dataReader:
+        passout=Passouts()
+        passout.Region = row[0]
+        passout.LCDM_Name = models.CharField(max_length=100)
+        passout.LDC_Name = models.CharField(max_length=100)
+        passout.Batch_Code = models.IntegerField()
+        passout.Status = models.CharField(max_length=1)
+        passout.Start_Date = models.IntegerField()
+        passout.End_Date = models.IntegerField()
+        passout.Course_Name = models.CharField(max_length=100)
+        passout.Full_Name = models.CharField(max_length=100)
+        passout.DOB = models.IntegerField()
+
 
     model = Post
     template_name = 'blog/home.html'
